@@ -5,9 +5,10 @@ export const data = [
     },
     {
         name: "KII Service",
-        tag: []
+        tag: ["2.3"]
     },
     {
-        name: "Survay Service"
+        name: "Survay Service",
+        tag: []
     }
 ]

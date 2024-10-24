@@ -20,7 +20,11 @@ export const CartBox = ({ data }) => {
                     <Typography variant="h6">{data?.name}</Typography>
                     <Box display="flex" alignItems="center">
                         <Typography variant="body2" sx={{ marginRight: 1 }}>
-                            {cartCount}
+                            {cartCount <= 1 ? (
+                                 <span>{cartCount} Image</span>
+                            ) : (
+                                <span>{cartCount} Images</span>
+                            )}
                         </Typography>
                         <IconButton onClick={toggleExpand}>
                             <ExpandMoreIcon />
@@ -56,7 +60,7 @@ const ChildCart = ({ item }) => {
             <Typography variant="body1" sx={{ marginRight: 1 }}>TAG: {item}</Typography>
 
             <Box>
-            <TextField
+                <TextField
                     value={dockerPullCommand}
                     slotProps={{
                         readOnly: true,
