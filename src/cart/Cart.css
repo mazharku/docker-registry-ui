@@ -1,3 +1,4 @@
+/* CartBox.css */
 .cart-container {
   display: flex;
   flex-direction: column;
@@ -8,10 +9,10 @@
 .cart {
   background-color: #f5f5cc;
   border: 2px solid #97e097;
-  padding: 10px;
-  border-radius: 8px;
-  width: 80%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
 .cart-content {

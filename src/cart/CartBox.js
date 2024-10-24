@@ -1,53 +1,82 @@
 import React, { useState } from "react";
-import "./Cart.css"
+import { Card, CardContent, Typography, IconButton, Collapse, Button, Box } from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { TextField, Tooltip } from '@mui/material';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
-export const CartBox = ({data}) => {
-    console.log(data?.tag)
+export const CartBox = ({ data }) => {
     const [isExpanded, setIsExpanded] = useState(false);
-    const [cartCount, setCartCount] = useState(data?.tag?.length); // Set initial cart count
+    const cartCount = data?.tag?.length || 0;
 
-    // Toggle the expanded state on arrow button click
+
     const toggleExpand = () => {
         setIsExpanded(!isExpanded);
     };
 
     return (
-        <div className="cart-container">
-            {/* Top Cart */}
-            <div className="cart">
-                <div className="cart-content">
-                    <div className="cart-title">{data?.name}</div>
-                    <div className="cart-icon">
-                        <span className="cart-count">{cartCount}</span>
-                        <button className="cart-button" onClick={toggleExpand}>
-                            <span className="button-icon">➤</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <Card variant="outlined" sx={{ marginBottom: 2 }}>
+            <CardContent>
+                <Box display="flex" justifyContent="space-between" alignItems="center">
+                    <Typography variant="h6">{data?.name}</Typography>
+                    <Box display="flex" alignItems="center">
+                        <Typography variant="body2" sx={{ marginRight: 1 }}>
+                            {cartCount}
+                        </Typography>
+                        <IconButton onClick={toggleExpand}>
+                            <ExpandMoreIcon />
+                        </IconButton>
+                    </Box>
+                </Box>
+            </CardContent>
 
-            {isExpanded && (
-                <div className="child-cart-list">
-                    {data?.tag?.map((item) => (
-                        <ChildCart item={item} />
+            <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+                <Box sx={{ padding: 2 }}>
+                    {data?.tag?.map((item, index) => (
+                        <ChildCart key={index} item={item} />
                     ))}
-                </div>
-            )}
-        </div>
+                </Box>
+            </Collapse>
+        </Card>
     );
-
 };
 
-const ChildCart = ({item}) => {
+const ChildCart = ({ item }) => {
+    const [copied, setCopied] = useState(false);
+
+    const dockerPullCommand = `docker pull image:${item}`; // Construct the Docker pull command
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(dockerPullCommand); // Copy the Docker pull command
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500); // Reset copied status after 1.5 seconds
+    };
+
     return (
-        <div className="child-cart">
-            <div className="child-cart-content">
-                <div className="child-cart-tag">TAG: {item}</div>
-                <div className="child-cart-actions">
-                    <button className="details-button">Details</button>
-                    <button className="delete-button">Delete</button>
-                </div>
-            </div>
-        </div>
+        <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ marginBottom: 1 }}>
+            <Typography variant="body1" sx={{ marginRight: 1 }}>TAG: {item}</Typography>
+
+            <Box>
+            <TextField
+                    value={dockerPullCommand}
+                    slotProps={{
+                        readOnly: true,
+                    }}
+                    variant="outlined"
+                    size="small"
+                    sx={{ width: 'auto', minWidth: '300px' }}
+                />
+                <Tooltip title="Copy" placement="top">
+                    <IconButton onClick={handleCopy} sx={{ marginLeft: 1 }}>
+                        <ContentCopyIcon />
+                    </IconButton>
+                </Tooltip>
+
+                {copied && <Typography variant="caption" color="success.main">
+                    Done
+                </Typography>}
+                <Button variant="outlined" sx={{ marginRight: 1 }}>Details</Button>
+                <Button variant="outlined" color="error">Delete</Button>
+            </Box>
+        </Box>
     );
 };
