@@ -1,0 +1,32 @@
+.home-page-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: flex-end; 
+    margin-bottom: 20px; 
+}
+
+.docker-hub-btn {
+    background-color: #115da9;
+    color: white;
+    font-weight: bold;
+}
+
+.docker-hub-btn:hover {
+    background-color: #1565c0;
+}
+
+.footer{
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
