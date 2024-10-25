@@ -1,48 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Card, CardContent, Typography, Box, Grid2, Button, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
-import './DockerHubPage.css'; // Create this CSS file for custom styles
+import './DockerHubPage.css';
+
 
 export const DockerHubPage = () => {
+    const [query, setQuery] = useState("nginx");
+
     const handleSearch = (event) => {
-        const query = event.target.value;
-        console.log("Search query: ", query);
+        setQuery(event.target.value);
     };
 
-    const [archType, setArchType] = useState({
-        arm64: false,
-        amd64: false,
-    });
+    const [data, setData] = useState([])
 
-    const handleCheckboxChange = (event) => {
-        setArchType({
-            ...archType,
-            [event.target.name]: event.target.checked,
-        });
-    };
-
-    const data = [
-        {
-            id: 1,
-            name: 'nginx',
-            description: 'Official build of Nginx.',
-            architecture: 'AMD64',
-            lastUpdate: '6 days ago'
-        },
-        {
-            id: 2,
-            name: 'nginx/nginx-ingress',
-            description: 'NGINX and NGINX Plus Ingress Controllers for Kubernetes',
-            architecture: 'AMD64',
-            lastUpdate: '1 hour ago'
-        },
-        {
-            id: 3,
-            name: 'auth-service',
-            description: 'Authentication manager',
-            architecture: 'AMD64',
-            lastUpdate: '1 hour ago'
+    useEffect(() => {
+        if (query) { 
+            fetch(`http://localhost:4000/api/search?q=${query}`)
+                .then(response => response.json())
+                .then(json => {
+                    console.log(json);
+                    setData(json);
+                })
+                .catch(error => console.error(error));
         }
-    ];
+    }, [query]);
 
     return (
         <div className="dockerhub-page">
@@ -53,56 +33,43 @@ export const DockerHubPage = () => {
                     fullWidth
                     onChange={handleSearch}
                 />
-                
-                <FormGroup row className="checkbox-group">
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={archType.arm64}
-                                onChange={handleCheckboxChange}
-                                name="arm64"
-                                color="primary"
-                            />
-                        }
-                        label="arm/64"
-                    />
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={archType.amd64}
-                                onChange={handleCheckboxChange}
-                                name="amd64"
-                                color="primary"
-                            />
-                        }
-                        label="amd/64"
-                    />
-                </FormGroup>
+
             </div>
 
             <Grid2 container spacing={3} className="cards-container">
-                {data.map(item => (
-                    <Grid2 item xs={12} sm={6} key={item.id}>
-                        <Card className="dockerhub-card">
-                            <CardContent>
-                                <Typography variant="h4" component="div">
-                                    {item.name}
-                                </Typography>
-                                <Typography variant="overline">
-                                    Architecture: {item.architecture}
-                                </Typography><br></br>
-                                <Typography variant="caption">
-                                    Last updated: {item.lastUpdate}
-                                </Typography>
-                                <Box display="flex" justifyContent="flex-end" mt={2}>
-                                    <Button variant="contained" className="pull-btn reg-btn">
-                                        Add To Registry
-                                    </Button>
-                                </Box>
-                            </CardContent>
-                        </Card>
-                    </Grid2>
-                ))}
+                {data?.summaries
+                    ?.map(item => (
+                        <Grid2 item xs={12} sm={6} key={item.id}>
+                            <Card className="dockerhub-card">
+                                <CardContent>
+                                    <Typography variant="h4" component="div">
+                                        {item.name}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        Architecture: {item.architectures
+                                            .filter(os => os.name !== "" && os.name !== "unknown")
+                                            .map(arc => arc.name).join(",")}
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                        OS: {item.operating_systems
+                                            .filter(os => os.name !== "" && os.name !== "unknown")
+                                            .map(os => os.name).join(",")}
+                                    </Typography>
+                                    <Typography variant="subtitle2">
+                                        Last updated: {item.updated_at}
+                                    </Typography>
+                                    <Typography variant="caption">
+                                        Description: {item.short_description}
+                                    </Typography>
+                                    <Box display="flex" justifyContent="flex-end" mt={2}>
+                                        <Button variant="contained" className="pull-btn reg-btn">
+                                            Add To Registry
+                                        </Button>
+                                    </Box>
+                                </CardContent>
+                            </Card>
+                        </Grid2>
+                    ))}
             </Grid2>
         </div>
     );
