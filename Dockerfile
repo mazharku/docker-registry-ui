@@ -14,6 +14,6 @@ EXPOSE 3000
 
 CMD ["npm", "start"]
 
-# docker build -t registr-ui .
+# docker build -t registry-ui .
 
 # docker run -p 3000:3000 registry-ui

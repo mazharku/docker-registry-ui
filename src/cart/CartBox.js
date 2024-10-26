@@ -47,7 +47,8 @@ export const CartBox = ({ data }) => {
 const ChildCart = ({ item, image }) => {
     const [copied, setCopied] = useState(false);
     const apiUrl = process.env.REACT_APP_API_URL;
-    const dockerPullCommand = `docker pull ${apiUrl}/${image}:${item}`;
+    const host = apiUrl.replace(/^https?:\/\//, '');
+    const dockerPullCommand = `docker pull ${host}/${image}:${item}`;
 
     const handleCopy = () => {
         navigator.clipboard.writeText(dockerPullCommand); 
