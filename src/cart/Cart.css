@@ -1,0 +1,126 @@
+/* CartBox.css */
+.cart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.cart {
+  background-color: #f5f5cc;
+  border: 2px solid #97e097;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.cart-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.cart-icon {
+  display: flex;
+  align-items: center;
+}
+
+.cart-count {
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.cart-button {
+  background-color: #ffffff;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+.cart-button:hover {
+  background-color: #f0f0f0;
+}
+
+.button-icon {
+  font-size: 18px;
+  color: #3f8cff;
+}
+
+/* Child cart (visible when expanded) */
+.child-cart-list {
+  margin-top: 10px;
+  width: 80%;
+}
+
+.child-cart {
+  background-color: #f5f5cc;
+  border: 2px solid #97e097;
+  padding: 10px;
+  border-radius: 8px;
+  width: 90%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+.child-cart-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.child-cart-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.child-cart-tag {
+  font-size: 14px;
+  color: #888;
+}
+
+.child-cart-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.details-button {
+  background-color: #8be3b6;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.details-button:hover {
+  background-color: #75cf9d;
+}
+
+.delete-button {
+  background-color: #ff5f5f;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #e44e4e;
+}
