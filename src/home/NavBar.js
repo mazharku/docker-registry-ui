@@ -25,7 +25,7 @@ export const NavBar= ()=> {
           variant="outlined"
           size="small"
           placeholder="Search..."
-          InputProps={{
+          input={{
             startAdornment: (
               <InputAdornment position="start">
                 <SearchIcon sx={{ color: color }} />
@@ -54,21 +54,34 @@ export const Footer = () => {
 
   return (
     <Box 
+    sx={{
+      background: NavBarColor,
+      color: color,
+      padding: '8px',
+      position: 'fixed',
+      left: 0,
+      right: 0,
+      bottom: 0,
+      boxShadow: '0 -2px 5px rgba(0, 0, 0, 0.3)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center', 
+    }}
+  >
+    <Typography variant="caption">Mazhar Ibna Zahur</Typography>
+
+    <Box 
       sx={{
-        background: NavBarColor,
-        color: color,
-        textAlign: 'center',
-        padding: '5px',
-        position: 'fixed',
-        left: 0,
-        right: 0,
-        bottom: 0,
-      }}
-    >
-      <Typography variant="body1">Mazhar Ibna Zahur</Typography>
-      <Typography variant="body2">&copy; {currentYear}</Typography>
-    </Box>
-  );
+        height: '14px', 
+        borderLeft: '1px solid', 
+        borderColor: color,
+        mx: 1, 
+      }} 
+    />
+
+    <Typography variant="caption">{currentYear}</Typography>
+  </Box>
+  )
 };
 
 
