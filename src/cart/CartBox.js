@@ -6,8 +6,8 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 export const CartBox = ({ data }) => {
     const [isExpanded, setIsExpanded] = useState(false);
-    const cartCount = data?.tag?.length || 0;
-
+    const cartCount = data?.tags?.length || 0;
+    
 
     const toggleExpand = () => {
         setIsExpanded(!isExpanded);
@@ -35,8 +35,8 @@ export const CartBox = ({ data }) => {
 
             <Collapse in={isExpanded} timeout="auto" unmountOnExit>
                 <Box sx={{ padding: 2 }}>
-                    {data?.tag?.map((item, index) => (
-                        <ChildCart key={index} item={item} />
+                    {data?.tags?.map((item, index) => (
+                        <ChildCart key={index} item={item} image={data?.name}/>
                     ))}
                 </Box>
             </Collapse>
@@ -44,15 +44,15 @@ export const CartBox = ({ data }) => {
     );
 };
 
-const ChildCart = ({ item }) => {
+const ChildCart = ({ item, image }) => {
     const [copied, setCopied] = useState(false);
-
-    const dockerPullCommand = `docker pull image:${item}`; // Construct the Docker pull command
+    const apiUrl = process.env.REACT_APP_API_URL;
+    const dockerPullCommand = `docker pull ${apiUrl}/${image}:${item}`;
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(dockerPullCommand); // Copy the Docker pull command
+        navigator.clipboard.writeText(dockerPullCommand); 
         setCopied(true);
-        setTimeout(() => setCopied(false), 1500); // Reset copied status after 1.5 seconds
+        setTimeout(() => setCopied(false), 1500); 
     };
 
     return (
@@ -67,7 +67,7 @@ const ChildCart = ({ item }) => {
                     }}
                     variant="outlined"
                     size="small"
-                    sx={{ width: 'auto', minWidth: '300px' }}
+                    sx={{ minWidth: '300px' ,width: 'fit-content'}}
                 />
                 <Tooltip title="Copy" placement="top">
                     <IconButton onClick={handleCopy} sx={{ marginLeft: 1 }}>
