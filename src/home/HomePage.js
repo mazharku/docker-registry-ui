@@ -50,7 +50,7 @@ export const HomePage = () => {
 });
 
     return (
-        <div className="home-page-container">
+        <div className="home-page-container" style={{ marginTop: '64px' }}>
             <div className="top-bar">
                 <Button 
                     variant="contained" 
