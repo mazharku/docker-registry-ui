@@ -1,7 +1,6 @@
 import React, {useState, useEffect } from "react";
 import "./Home.css";
 import { CartBox } from "../cart/CartBox";
-import { data } from "../data.js";
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,6 +17,7 @@ export const HomePage = () => {
         const fetchImages = async () => {
           try {
             const apiUrl = process.env.REACT_APP_API_URL;
+            
             const imagesResponse = await fetch(`${apiUrl}/v2/_catalog`);
             const images = await imagesResponse.json();
             const imagesWithTags = await Promise.all(

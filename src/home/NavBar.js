@@ -7,11 +7,15 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
 
 export const NavBar= ()=> {
+  const NavBarColor = process.env.REACT_APP_NAV_BAR_COLOR|| "#000000";
+  const color = process.env.REACT_APP_COLOR|| "#FFFFFF";
+  const NavBarTitle = process.env.REACT_APP_TITLE || "Registry UI";
+  
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#000000' }}>
+    <AppBar position="static" sx={{ backgroundColor: NavBarColor, color: color }}>
     <Toolbar>
       <Typography variant="h6">
-        Registry APP
+        {NavBarTitle}
       </Typography>
 
       <Box sx={{ flexGrow: 1 }} />
@@ -24,13 +28,13 @@ export const NavBar= ()=> {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon sx={{ color: 'white' }} />
+                <SearchIcon sx={{ color: color }} />
               </InputAdornment>
             ),
           }}
           sx={{
-            input: { color: 'white' }, // Text color inside the search field
-            fieldset: { borderColor: 'white' }, // Border color of the search field
+            input: { color: color }, 
+            fieldset: { borderColor: 'white' },
             '& .MuiOutlinedInput-root:hover fieldset': {
               borderColor: 'gray',
             },
@@ -44,13 +48,15 @@ export const NavBar= ()=> {
 
 
 export const Footer = () => {
+  const NavBarColor = process.env.REACT_APP_NAV_BAR_COLOR || "#000000";
+  const color = process.env.REACT_APP_COLOR|| "#FFFFFF";
   const currentYear = new Date().getFullYear();
 
   return (
     <Box 
       sx={{
-        background: 'black',
-        color: 'white',
+        background: NavBarColor,
+        color: color,
         textAlign: 'center',
         padding: '5px',
         position: 'fixed',
