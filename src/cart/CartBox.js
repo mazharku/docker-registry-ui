@@ -58,6 +58,7 @@ const ChildCart = ({ item, image }) => {
     const [copied, setCopied] = useState(false);
     const [details, setDetails] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
+    const [open, setOpen] = useState(false);
     const apiUrl = process.env.REACT_APP_API_URL;
     const host = apiUrl.replace(/^https?:\/\//, '');
     const dockerPullCommand = `docker pull ${host}/${image}:${item}`;
@@ -73,23 +74,39 @@ const ChildCart = ({ item, image }) => {
 
     }
 
-    function fetchDetails(image, tag) {
+    const fetchDetails = async (image, tag) => {
         console.warn(image, " tag is : ", tag);
-        return {
-            name: "registry",
-            tag: "2",
-            os: "linux",
-            architecture: "arm64",
-            created: "2023-10-02T18:42:41Z",
-        };
+
+    try {
+      const response = await fetch(`${apiUrl}/v2/${image}/manifests/${tag}`);
+      const data = await response.json();
+      
+      const parsedDetails = {
+        name: data.name,
+        tag: data.tag,
+        os: data.history[0]?.v1Compatibility ? JSON.parse(data.history[0].v1Compatibility).os : "N/A",
+        architecture: data.architecture,
+        created: data.history[0]?.v1Compatibility ? JSON.parse(data.history[0].v1Compatibility).created : "N/A",
+      };
+      
+      setDetails(parsedDetails);
+      setOpen(true);
+    } catch (error) {
+      console.error("Error fetching details:", error);
     }
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+        setDetails(null);
+      };
 
     const DetailsModal = ({ open, onClose, details }) => (
         <Modal open={open} onClose={onClose} aria-labelledby="modal-title">
     <Box sx={{
       position: 'relative',
       padding: 3,
-      maxWidth: 400,
+      maxWidth: 600,
       margin: 'auto',
       mt: '20vh',
       backgroundColor: 'white',
@@ -133,9 +150,7 @@ const ChildCart = ({ item, image }) => {
   </Modal>
     );
     const handleDetailsClick = () => {
-        const fetchedDetails = fetchDetails(image, item);
-        setDetails(fetchedDetails);
-        setModalOpen(true);
+        fetchDetails(image, item);
     };
 
     return (
@@ -164,7 +179,9 @@ const ChildCart = ({ item, image }) => {
                 <Button variant="outlined" sx={{ marginRight: 1 }} onClick={handleDetailsClick}>Details</Button>
                 <Button variant="outlined" color="error" onClick={() => deleteTag(image, item)}>Delete</Button>
             </Box>
-            {details && <DetailsModal open={modalOpen} onClose={() => setModalOpen(false)} details={details} />}
+            {details && (
+        <DetailsModal open={open} onClose={handleClose} details={details} />
+      )}
     </Box>
     );
 };
