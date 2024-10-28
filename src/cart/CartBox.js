@@ -19,9 +19,9 @@ export const CartBox = ({ data }) => {
                 marginBottom: 2,
                 border: 0.4,
                 //borderColor: "#00ff00",
-                color: "#5e6e05",
-                boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.3)',
-                background: "#F1F1F1",
+                color: "#000000",
+                boxShadow: '1px 1px 1px 1px rgba(244, 244, 244, 0.3)',
+                background: "#FFFFFF",
 
             }}
         >
@@ -104,8 +104,9 @@ const ChildCart = ({ item, image }) => {
     const DetailsModal = ({ open, onClose, details }) => (
         <Modal open={open} onClose={onClose} aria-labelledby="modal-title">
     <Box sx={{
+        //inner
       position: 'relative',
-      padding: 3,
+      padding: 2,
       maxWidth: 600,
       margin: 'auto',
       mt: '20vh',
@@ -113,20 +114,20 @@ const ChildCart = ({ item, image }) => {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      boxShadow: 3,
+      boxShadow: 5,
       borderRadius: 2,
     }}>
-      {/* Inner Frame */}
+      {/* Outer Frame */}
       <Box sx={{
         position: 'absolute',
-        top: -6,
-        left: -6,
-        right: -6,
-        bottom: -6,
-        backgroundColor: 'white',
-        borderRadius: 1,
-        boxShadow: 3,
-        zIndex: -1,
+        top: -3,
+        left: -3,
+        right: -3,
+        bottom: -3,
+        backgroundColor: '#F9F9F9',
+        borderRadius: 2,
+        boxShadow: 5,
+        zIndex: -2,
       }} />
 
       <Typography id="modal-title" variant="h6" sx={{ mb: 2, alignSelf: 'center', fontWeight:800 }}>Image Details</Typography>
