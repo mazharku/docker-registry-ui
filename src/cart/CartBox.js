@@ -75,8 +75,6 @@ const ChildCart = ({ item, image }) => {
     }
 
     const fetchDetails = async (image, tag) => {
-        console.warn(image, " tag is : ", tag);
-
     try {
       const response = await fetch(`${apiUrl}/v2/${image}/manifests/${tag}`);
       const data = await response.json();
@@ -150,9 +148,6 @@ const ChildCart = ({ item, image }) => {
     </Box>
   </Modal>
     );
-    const handleDetailsClick = () => {
-        fetchDetails(image, item);
-    };
 
     return (
         <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ marginBottom: 1 }}>
@@ -177,7 +172,7 @@ const ChildCart = ({ item, image }) => {
                 {copied && <Typography variant="caption" color="success.main">
                     Done
                 </Typography>}
-                <Button variant="outlined" sx={{ marginRight: 1 }} onClick={handleDetailsClick}>Details</Button>
+                <Button variant="outlined" sx={{ marginRight: 1 }} onClick={()=> fetchDetails(image, item)}>Details</Button>
                 <Button variant="outlined" color="error" onClick={() => deleteTag(image, item)}>Delete</Button>
             </Box>
             {details && (
