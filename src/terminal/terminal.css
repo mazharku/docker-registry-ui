@@ -1,0 +1,61 @@
+/* Terminal.css */
+.terminal {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    font-family: monospace;
+    padding: 16px;
+    width: 100%;
+    height: 300px;
+    overflow-y: auto;
+    border-radius: 5px;
+}
+
+.terminal-line {
+    display: flex;
+    align-items: center;
+}
+
+.terminal-input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: inherit;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.prompt-symbol {
+    color: #0aff0a;
+    margin-right: 8px;
+}
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #333;
+    color: white;
+}
+
+.terminal-container {
+    background-color: black;
+    color: #00ff00;
+    padding: 1rem;
+    font-family: monospace;
+    height: 300px;
+    overflow-y: auto;
+}
+
+.output {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.output-line {
+    margin: 0.2rem 0;
+}
+
+.input-field input {
+    color: #00ff00;
+}
