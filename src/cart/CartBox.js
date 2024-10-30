@@ -94,6 +94,7 @@ const ChildCart = ({ item, image }) => {
             setOpenDialog(false);
         } catch (error) {
             console.error("Error fetching details:", error);
+            toast.error(error?.message || "Error!", { autoClose: 200 });
         }
 
     }
