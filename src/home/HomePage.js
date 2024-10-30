@@ -3,7 +3,8 @@ import "./Home.css";
 import { CartBox } from "../cart/CartBox";
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const HomePage = ({ searchTerm }) => {
   const navigate = useNavigate();
@@ -17,25 +18,9 @@ export const HomePage = ({ searchTerm }) => {
     const fetchImages = async () => {
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
-
-        const imagesResponse = await fetch(`${apiUrl}/v2/_catalog`);
+        const imagesResponse = await fetch("http://localhost:4000/api/registry/");
         const images = await imagesResponse.json();
-        const imagesWithTags = await Promise.all(
-          images.repositories?.map(async (image) => {
-
-            const tagsResponse = await fetch(`${apiUrl}/v2/${image}/tags/list`);
-
-            if (!tagsResponse.ok) {
-
-              return { name: image, tags: [] };
-            }
-
-            const tags = await tagsResponse.json();
-            return { name: image, tags: tags.tags };
-          })
-        );
-
-        setImagesWithTags(imagesWithTags);
+        setImagesWithTags(images);
       } catch (error) {
         console.error('Error fetching images and tags:', error);
       }
@@ -54,6 +39,7 @@ export const HomePage = ({ searchTerm }) => {
 
   return (
     <div className="home-page-container" style={{ marginTop: '64px' }}>
+      <ToastContainer position="top-right" /> 
       <div className="top-bar">
         <Button
           variant="contained"

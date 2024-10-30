@@ -14,7 +14,7 @@ export const DockerHubPage = () => {
 
     useEffect(() => {
         if (query) { 
-            fetch(`http://localhost:4000/api/search?q=${query}`)
+            fetch(`http://localhost:4000/api/registry/docker-hub/search/${query}`)
                 .then(response => response.json())
                 .then(json => {
                     console.log(json);
@@ -37,8 +37,7 @@ export const DockerHubPage = () => {
             </div>
 
             <Grid2 container spacing={3} className="cards-container">
-                {data?.summaries
-                    ?.map(item => (
+                {data?.map(item => (
                         <Grid2 item xs={12} sm={6} key={item.id}>
                             <Card className="dockerhub-card">
                                 <CardContent>
@@ -46,20 +45,16 @@ export const DockerHubPage = () => {
                                         {item.name}
                                     </Typography>
                                     <Typography variant="subtitle1">
-                                        Architecture: {item.architectures
-                                            .filter(os => os.name !== "" && os.name !== "unknown")
-                                            .map(arc => arc.name).join(",")}
+                                        Architecture: {item.architectures}
                                     </Typography>
                                     <Typography variant="subtitle1">
-                                        OS: {item.operating_systems
-                                            .filter(os => os.name !== "" && os.name !== "unknown")
-                                            .map(os => os.name).join(",")}
+                                        OS: {item.osName}
                                     </Typography>
                                     <Typography variant="subtitle2">
-                                        Last updated: {item.updated_at}
+                                        Last updated: {item.updateDate}
                                     </Typography>
                                     <Typography variant="caption">
-                                        Description: {item.short_description}
+                                        Description: {item.description}
                                     </Typography>
                                     <Box display="flex" justifyContent="flex-end" mt={2}>
                                         <Button variant="contained" className="pull-btn reg-btn">
